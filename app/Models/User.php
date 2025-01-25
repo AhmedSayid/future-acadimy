@@ -58,4 +58,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(SubjectStudent::class,'student_id');
     }
+
+    public function login()
+    {
+        // Generate and return an API token (if using Sanctum or Passport)
+        return $this->createToken('auth_token')->plainTextToken;
+    }
+
 }

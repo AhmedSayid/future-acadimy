@@ -95,7 +95,12 @@ class CourseController extends Controller
             }
             if ($request->hasFile('video')) {
                 $file = $request->file('video');
-                $fileName = time() . '_' . $file->getClientOriginalName();
+
+                $originalName = $file->getClientOriginalName();
+                $sanitizedFileName = str_replace(' ', '_', $originalName);
+
+                $fileName = time() . '_' . $sanitizedFileName;
+
                 $filePath = $file->storeAs('videos', $fileName, 'public');
 
                 return response()->json([
