@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BankQuestionController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CourseController;
@@ -25,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[DashboardController::class ,'getHomePage']);
 
-Route::get('login' , [\App\Http\Controllers\AuthController::class , 'showLoginForm'])->name('login')->middleware('guest');
-Route::post('login', [\App\Http\Controllers\AuthController::class , 'login'])->name('postLogin')->middleware('verify.device');
+Route::get('login' , [AuthController::class , 'showLoginForm'])->name('login')->middleware('guest');
+Route::post('login', [AuthController::class , 'login'])->name('postLogin')->middleware('verify.device');
 Route::get('go-out' , function (){
    Auth::logout();
    return redirect()->route('login');

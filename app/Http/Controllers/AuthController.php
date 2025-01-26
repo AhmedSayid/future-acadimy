@@ -71,8 +71,9 @@ class AuthController extends Controller
 //            return redirect('/login')->withErrors(['session_error' => 'You have been logged out because your account is active on another device.']);
         }
 
+        $credentials = ['phone' => $request->phone, 'password' => $request->password ];
 
-        if(auth()->attempt(['phone' => $request->phone, 'password' => $request->password])){
+        if(auth()->attempt($credentials, $remember = true)){
             $token = Str::random(60);
             if ($user->role == RoleType::STUDENT){
                 $user->update(['device_token' => $token]);

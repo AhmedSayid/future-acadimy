@@ -6,9 +6,12 @@ use App\Http\Requests\Course as CourseReq;
 use App\Http\Requests\updateCourse;
 use App\Models\Chapter;
 use App\Models\Course;
+use App\Models\Student;
+use App\Models\SubjectStudent;
+use App\Notifications\NotifyUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
-use Mockery\Exception;
 
 class CourseController extends Controller
 {
@@ -33,8 +36,13 @@ class CourseController extends Controller
         try {
             $data = $request->validated();
             $data['video'] = $request->input('filePath');
-            Course::create($data);
+            $course = Course::create($data);
 
+            $studentIds = SubjectStudent::where('subject_id',$request->subject_id)->pluck('student_id');
+            $students = Student::with('user')->whereIn('id',$studentIds)->get()->pluck('user');
+            $title = 'تم إضافة فيديو جديد';
+            $msg = 'تم رفع فيديو جديد لمادة '.$course->subject->name;
+            Notification::send($students, new NotifyUser($title,$msg));
             return redirect()->route('courses.index', $request->subject_id)
                 ->with('msg', 'Video added successfully.');
         }  catch (\Exception $e){
