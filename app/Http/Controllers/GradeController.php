@@ -26,7 +26,6 @@ class GradeController extends Controller
             Grade::create([
                 'name'          => $request->name,
                 'teacher_id'    => $this->getTeacherId(),
-                'test_error'    => 'ssss',
             ]);
             return response()->json(['key' => 'success' , 'msg' => 'تم إضافة الصف بنجاح']);
         } catch (\Exception $e){
