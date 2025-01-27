@@ -29,7 +29,7 @@ class UserController extends Controller
             $user = User::create($request->validated() + ['role' => RoleType::TEACHER]);
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $fileName = time() . '_' . $file->getClientOriginalName();
+                $fileName = time() . '-' . $file->getClientOriginalName();
                 $filePath = $file->storeAs('images', $fileName, 'public');
                 $user->update(['image' => $filePath]);
             }
