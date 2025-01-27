@@ -91,8 +91,8 @@
                     <tbody>
                     @foreach($data['students']->take(10) as $student)
                         <tr>
-                            <td>{{ $student->name }}</td>
-                            <td>{{ $student->phone }}</td>
+                            <td>{{ $student->user?->name }}</td>
+                            <td>{{ $student->user?->phone }}</td>
                         </tr>
                     @endforeach
                     </tbody>
