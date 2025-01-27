@@ -36,10 +36,10 @@ class NotificationController extends Controller
     {
         try {
             $subject = Subject::findOrFail($request->subject_id);
-            $student = Student::with('user')->findOrFail($request->student_id);
+            $user = Auth::user();
 
             $title = 'لقد حاول احد الطلاب تسجيل الشاشة';
-            $msg = 'قام الطالب '.$student->user->name.'بمحاولة عمل تسجيل للشاشة في مادة '.$subject->name;
+            $msg = 'قام الطالب '.$user->name.'بمحاولة عمل تسجيل للشاشة في مادة '.$subject->name;
 
             $user = $subject->teacher?->user;
 
