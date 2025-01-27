@@ -39,7 +39,7 @@ class NotificationController extends Controller
             $user = Auth::user();
 
             $title = 'لقد حاول احد الطلاب تسجيل الشاشة';
-            $msg = 'قام الطالب '.$user->name.'بمحاولة عمل تسجيل للشاشة في مادة '.$subject->name;
+            $msg = 'قام الطالب صاحب الرقم '.$user->phone.'بمحاولة عمل تسجيل للشاشة في مادة '.$subject->name;
 
             $user = $subject->teacher?->user;
 
