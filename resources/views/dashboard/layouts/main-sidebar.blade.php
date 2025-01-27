@@ -9,7 +9,7 @@
         <div class="app-sidebar__user clearfix">
             <div class="dropdown user-pro-body">
                 <div class="">
-                    <img alt="user-img" class="avatar avatar-xl brround" src="{{ Storage::url($row->image) }}"><span
+                    <img alt="user-img" class="avatar avatar-xl brround" src="{{ Storage::url(Auth::user()->image) }}"><span
                         class="avatar-status profile-status bg-green"></span>
                 </div>
                 <div class="user-info">
