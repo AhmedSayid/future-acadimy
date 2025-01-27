@@ -14,7 +14,7 @@
         <tr>
             <td>
                 @isset($row->image)
-                    <img src="{{ asset($row->image) }}" alt="avatar" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                    <img src="{{ Storage::url($row->image) }}" alt="avatar" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
                 @endif
             </td>
             <td>
