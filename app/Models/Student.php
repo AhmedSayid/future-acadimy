@@ -13,11 +13,17 @@ class Student extends Model
 
     protected $fillable = [
         'user_id',
+        'grade_id',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function grade(): BelongsTo
+    {
+        return $this->belongsTo(Grade::class);
     }
 
     public function subjects(): HasMany

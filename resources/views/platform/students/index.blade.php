@@ -69,11 +69,18 @@
                             <input type="password" class="form-control" name="password" id="password" placeholder="كلمة المرور">
                         </div>
                         <div class="form-group">
-                            <label for="subject">المادة</label>
-                            <select name="subject_id" id="subject" class="form-control">
-                                @foreach($subjects as $subject)
-                                    <option value="{{$subject->id}}">{{$subject->name}}</option>
+                            <label for="grade">الصف الدراسي</label>
+                            <select name="grade_id" id="editGrade" class="form-control">
+                                <option value="">اختر الصف الدراسي</option>
+                                @foreach($grades as $grade)
+                                    <option value="{{ $grade->id }}">{{ $grade->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">المادة</label>
+                            <select name="subject_id" id="editSubject" class="form-control">
                             </select>
                         </div>
                     </div>
@@ -110,11 +117,18 @@
                             <input type="password" class="form-control" name="password" id="password" placeholder="كلمة المرور">
                         </div>
                         <div class="form-group">
+                            <label for="grade">الصف الدراسي</label>
+                            <select name="grade_id" id="grade" class="form-control">
+                                <option value="">اختر الصف الدراسي</option>
+                                @foreach($grades as $grade)
+                                    <option value="{{ $grade->id }}">{{ $grade->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="subject">المادة</label>
                             <select name="subject_id" id="subject" class="form-control">
-                                @foreach($subjects as $subject)
-                                    <option value="{{$subject->id}}">{{$subject->name}}</option>
-                                @endforeach
                             </select>
                         </div>
                         <div class="form-group mb-0 mt-3 justify-content-end">
@@ -302,8 +316,61 @@
                     }
                 });
             });
+
+            $(document).on('change','#grade',function(){
+                const gradeId = $(this).val();
+                const subjectDropdown = $('#subject');
+
+                // Clear existing subjects
+                subjectDropdown.html('<option value="">اختر المادة</option>');
+
+                if (gradeId) {
+                    $.ajax({
+                        url: `{{ route('subjects.getSubjects', '') }}/${gradeId}`,
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.subjects && response.subjects.length > 0) {
+                                response.subjects.forEach(subject => {
+                                    subjectDropdown.append(`<option value="${subject.id}">${subject.name}</option>`);
+                                });
+                            } else {
+                                subjectDropdown.html('<option value="">لا توجد مواد متاحة</option>');
+                            }
+                        },
+                        error: function () {
+                            alert('خطأ في استرجاع المواد.');
+                        }
+                    });
+                }
+            });
+
+            $(document).on('change','#editGrade',function(){
+                const gradeId = $(this).val();
+                const subjectDropdown = $('#editSubject');
+
+                // Clear existing subjects
+                subjectDropdown.html('<option value="">اختر المادة</option>');
+
+                if (gradeId) {
+                    $.ajax({
+                        url: `{{ route('subjects.getSubjects', '') }}/${gradeId}`,
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.subjects && response.subjects.length > 0) {
+                                response.subjects.forEach(subject => {
+                                    subjectDropdown.append(`<option value="${subject.id}">${subject.name}</option>`);
+                                });
+                            } else {
+                                subjectDropdown.html('<option value="">لا توجد مواد متاحة</option>');
+                            }
+                        },
+                        error: function () {
+                            alert('خطأ في استرجاع المواد.');
+                        }
+                    });
+                }
+            });
+
         });
-
-
     </script>
 @endsection

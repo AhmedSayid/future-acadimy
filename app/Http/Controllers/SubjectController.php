@@ -72,4 +72,13 @@ class SubjectController extends Controller
             return response()->json(['key' => 'failed' , 'msg' => 'يوجد خطأ ما']);
         }
     }
+
+    public function getSubjects($grade_id)
+    {
+        $subjects = Subject::where('grade_id', $grade_id)->get();
+
+        return response()->json([
+            'subjects' => $subjects
+        ]);
+    }
 }

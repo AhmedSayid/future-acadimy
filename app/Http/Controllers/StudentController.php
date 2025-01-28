@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\RoleType;
 use App\Http\Requests\Student;
 use App\Http\Requests\StudentUpdate;
+use App\Models\Grade;
 use App\Models\Subject;
 use App\Models\SubjectStudent;
 use App\Models\Teacher;
@@ -27,7 +28,8 @@ class StudentController extends Controller
             return response()->json(['html' => $html]);
         }
         $subjects = Subject::where('teacher_id' , $this->getTeacherId())->get();
-        return view('platform.students.index', compact('subjects'));
+        $grades = Grade::where('teacher_id',$this->getTeacherId())->get();
+        return view('platform.students.index', compact('subjects','grades'));
     }
 
     public function store(Student $request)
@@ -105,7 +107,7 @@ class StudentController extends Controller
             if(!$student){
                 $check = false;
                 $student = User::create($request->validated() + ['role' => RoleType::STUDENT]);
-                \App\Models\Student::create(['user_id' => $student->id]);
+                \App\Models\Student::create(['user_id' => $student->id, 'grade_id' => $request->grade_id]);
             }
 
             SubjectStudent::firstOrCreate([

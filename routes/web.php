@@ -66,6 +66,7 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
         Route::post('store' , 'store')->name('store');
         Route::post('update/{id}' , 'update')->name('update');
         Route::delete('delete/{id}' , 'delete')->name('delete');
+        Route::get('/get-subjects/{grade_id}', 'getSubjects')->name('getSubjects');
     });
     Route::controller(ChapterController::class)->as('chapters.')->prefix('chapters/')->group(function (){
         Route::get('/{id}' ,'index')->name('index');
