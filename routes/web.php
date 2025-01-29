@@ -37,6 +37,7 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
 
     Route::get('search',[DashboardController::class , 'search'])->name('search');
     Route::get('/home' , [DashboardController::class ,'platform'])->name('platform.index');
+    Route::get('/read-notification',[DashboardController::class,'readNotification'])->name('notifications.mark-all');
 
     Route::controller(UserController::class)->as('teachers.')->prefix('teachers/')->group(function (){
         Route::get('' , 'index')->name('index');
@@ -80,7 +81,7 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
         Route::get('change-status', 'changeBlockStatus')->name('change-status');
         Route::get('get-student-data/{id}', 'getStudentData')->name('get-student-data');
         Route::post('store' , 'addStudent')->name('store');
-        Route::get('show/{id}' , 'show')->name('show');
+        Route::get('show/{id}/{notification_id?}' , 'show')->name('show');
         Route::post('update/{id}' , 'update')->name('update');
         Route::delete('delete/{id}/{subject_id}' , 'delete')->name('delete');
     });

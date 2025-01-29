@@ -12,6 +12,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use App\Traits\GetId;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -57,8 +58,14 @@ class StudentController extends Controller
         }
     }
 
-    public function show($id)
+    public function show($id, ?string $notification_id = null)
     {
+        if($notification_id){
+            $notification = Auth::user()->notifications()->where('id', $notification_id)->first();
+            if ($notification) {
+                $notification->markAsRead();
+            }
+        }
         $user = User::findOrFail($id);
         $rows = SubjectStudent::with('subject')
             ->where('student_id',$this->getStudentId($id))->get();

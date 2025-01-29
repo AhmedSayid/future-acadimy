@@ -104,6 +104,18 @@
     });
 </script>
 <script>
+    $(document).on('click', '#mark-all-read', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{{ route('notifications.mark-all') }}",
+            method: 'GET',
+            success: function () {
+                location.reload();
+            }
+        });
+    });
+</script>
+<script>
     document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener('keydown', event => {
         if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I')) {

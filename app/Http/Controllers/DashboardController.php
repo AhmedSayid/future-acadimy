@@ -70,6 +70,12 @@ class DashboardController extends Controller
         return view('platform.index' , compact('data'));
     }
 
+    public function readNotification()
+    {
+        Auth::user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
     private function getAdminHomeData()
     {
         $teachers = User::where('role', RoleType::TEACHER)->latest()->get();

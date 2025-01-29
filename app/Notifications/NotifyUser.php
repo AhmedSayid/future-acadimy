@@ -13,14 +13,16 @@ class NotifyUser extends Notification
 
     public $title;
     public $message;
+    public $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($title, $message)
+    public function __construct($title, $message, $user)
     {
         $this->title = $title;
         $this->message = $message;
+        $this->user = $user;
     }
 
     /**
@@ -37,8 +39,9 @@ class NotifyUser extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => $this->title,
-            'message' => $this->message,
+            'title'     => $this->title,
+            'message'   => $this->message,
+            'user'      => $this->user,
 //            'url' => '/notifications',
         ];
     }
