@@ -300,6 +300,7 @@
 
                             // Clear form
                             $('#userForm')[0].reset();
+                            $('#subject').val(null).trigger('change'); // Clear the multi-select
 
                             // Simulate a click on the reloadTable button
                             $('.reloadTable').trigger('click');
