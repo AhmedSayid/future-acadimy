@@ -63,22 +63,22 @@ class AuthController extends Controller
 
         $sessionToken = session('device_token');
 
-//        if ($user->device_token && $user->device_token != $sessionToken) {
-//            return [
-//                'key'   => 'fail',
-//                'msg'   => 'لفد قمت بتسجيل الدخول بالفعل من جهاز اخر',
-//                'data'  =>[],
-//            ];
-////            return redirect('/login')->withErrors(['session_error' => 'You have been logged out because your account is active on another device.']);
-//        }
+        if ($user->device_token && $user->device_token != $sessionToken) {
+            return [
+                'key'   => 'fail',
+                'msg'   => 'لفد قمت بتسجيل الدخول بالفعل من جهاز اخر',
+                'data'  =>[],
+            ];
+//            return redirect('/login')->withErrors(['session_error' => 'You have been logged out because your account is active on another device.']);
+        }
 
         $credentials = ['phone' => $request->phone, 'password' => $request->password ];
         if(auth()->attempt($credentials, $remember = true)){
-//            $token = Str::random(60);
-//            if ($user->role == RoleType::STUDENT){
-//                $user->update(['device_token' => $token]);
-//                session(['device_token' => $token]);
-//            }
+            $token = Str::random(60);
+            if ($user->role == RoleType::STUDENT){
+                $user->update(['device_token' => $token]);
+                session(['device_token' => $token]);
+            }
 
             return [
                 'key' => 'success',
