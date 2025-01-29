@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="image">الصورة</label>
                             @isset($user->image)
-                                <img src="{{ asset($user->image) }}" alt="Image" class="img-thumbnail mt-2" style="max-width: 150px; height: auto;">
+                                <img src="{{ Storage::url($row->image) }}" alt="Image" class="img-thumbnail mt-2" style="max-width: 150px; height: auto;">
                             @endisset
                         </div>
                     </form>
