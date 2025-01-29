@@ -20,7 +20,7 @@ class CourseResource extends JsonResource
             'name'      => $this->name,
             'subject'   => $this->subject->name,
             'chapter'   => $this->chapter?->name,
-            'video'     => Storage::url($this->video),
+            'video'     => asset(Storage::url($this->video)),
         ];
     }
 }
