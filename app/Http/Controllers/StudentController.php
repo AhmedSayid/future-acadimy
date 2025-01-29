@@ -81,6 +81,13 @@ class StudentController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->update($request->validated());
+            foreach ($request->subject_id as $subject){
+                SubjectStudent::firstOrCreate([
+                    'subject_id' => $subject,
+                    'student_id' => $this->getStudentId($id),
+                    'teacher_id' => $this->getTeacherId(),
+                ]);
+            }
             return response()->json(['key' => 'success', 'msg' => 'تم تعديل المعلم بنجاح']);
         } catch (\Exception $e){
             $this->log($e);
