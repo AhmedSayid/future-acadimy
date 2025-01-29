@@ -40,7 +40,7 @@
                 <a href="#" class="btn btn-outline-primary btn-edit" data-id="{{ $row->student?->user?->id }}">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
-                <a href="{{route('students.show' , $row->id)}}"
+                <a href="{{route('students.show' , $row->student?->user?->id)}}"
                    class="btn btn-outline-secondary">
                     <i class="bi bi-eye-fill"></i>
                 </a>

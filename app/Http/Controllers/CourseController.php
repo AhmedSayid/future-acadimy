@@ -42,7 +42,8 @@ class CourseController extends Controller
             $students = Student::with('user')->whereIn('id',$studentIds)->get()->pluck('user');
             $title = 'تم إضافة فيديو جديد';
             $msg = 'تم رفع فيديو جديد لمادة '.$course->subject->name;
-            Notification::send($students, new NotifyUser($title,$msg));
+            $route = "#";
+            Notification::send($students, new NotifyUser($title, $msg, $route));
             return redirect()->route('courses.index', $request->subject_id)
                 ->with('msg', 'Video added successfully.');
         }  catch (\Exception $e){
@@ -54,7 +55,7 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::findOrFail($id);
-        $chapters = Chapter::where('subject_id',$course->subject_id);
+        $chapters = Chapter::where('subject_id',$course->subject_id)->get();
         return view('platform.courses.edit',compact('course','chapters'));
     }
 

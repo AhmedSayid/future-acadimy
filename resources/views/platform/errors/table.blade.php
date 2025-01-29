@@ -3,6 +3,7 @@
     <thead>
     <tr>
         <th class="border-bottom-0">#</th>
+        <th class="border-bottom-0">التاريخ</th>
         <th class="border-bottom-0">التحكم</th>
     </tr>
     </thead>
@@ -13,6 +14,7 @@
             <td>
                 {{$i++}}
             </td>
+            <td>{{ \Carbon\Carbon::parse($row->created_at)->format('Y-m-d h:i:s A') }}</td>
             <td>
                 <a href="#" class="btn btn-outline-primary btn-edit" data-id="{{ $row->id }}">
                     <i class="bi bi-eye-fill"></i>

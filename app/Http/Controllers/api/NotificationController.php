@@ -42,8 +42,8 @@ class NotificationController extends Controller
             $msg = 'قام الطالب صاحب الرقم '.$user->phone.'بمحاولة عمل تسجيل للشاشة في مادة '.$subject->name;
 
             $teacher = $subject->teacher?->user;
-
-            $teacher->notify(new NotifyUser($title , $msg,$user));
+            $route = route('students.show',$user->id);
+            $teacher->notify(new NotifyUser($title, $msg, $route));
             return response()->json(['key' => 'success', 'msg' => 'تم ارسال الاشعار بنجاح']);
         }catch (\Exception $e){
             $this->log($e);
