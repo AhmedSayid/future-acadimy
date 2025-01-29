@@ -23,7 +23,7 @@
                         مفعل
                         <i class="feather icon-rotate-cw"></i>
                     </span>
-                    <span class="btn btn-sm rounded-5 round btn-outline-danger change_status" data-id="{{$row->id}}">
+                    <span class="btn btn-sm rounded-5 round btn-outline-danger change_status" data-id="{{$row->student?->user?->id}}">
                         حظر
                     </span>
                 @else
@@ -31,7 +31,7 @@
                         محظور
                         <i class="feather icon-rotate-cw"></i>
                     </span>
-                    <span class="btn btn-sm rounded-5 round btn-outline-success change_status" data-id="{{$row->id}}">
+                    <span class="btn btn-sm rounded-5 round btn-outline-success change_status" data-id="{{$row->student?->user?->id}}">
                         تفعيل
                     </span>
                 @endif
