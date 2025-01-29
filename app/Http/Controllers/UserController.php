@@ -60,6 +60,7 @@ class UserController extends Controller
         $teacher = \App\Models\Teacher::findOrFail($this->getTeacherId($id));
         $students_count = SubjectStudent::whereIn('subject_id', $teacher->subjects->pluck('id'))
             ->with('student.user')
+            ->distinct('student_id')
             ->count();
         $subjects_count = Subject::where('teacher_id',$teacher->id)->count();
         return view('platform.users.show',compact('user', 'students_count','subjects_count'));
