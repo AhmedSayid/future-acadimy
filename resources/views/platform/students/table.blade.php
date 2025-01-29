@@ -42,7 +42,7 @@
                 <a href="#" class="btn btn-outline-primary btn-edit" data-id="{{ $row->id }}">
                     <i class="bi bi-pencil-fill"></i>
                 </a>
-                <a href="#" class="btn btn-outline-danger btn-delete" data-id="{{ $row->id }}">
+                <a href="#" class="btn btn-outline-danger btn-delete" data-id="{{ $row->id }}" data-subject_id="{{$row->subject->id}}">
                     <i class="bi bi-trash3-fill"></i>
                 </a>
                 <a href="{{route('students.show' , $row->id)}}"

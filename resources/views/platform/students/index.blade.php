@@ -248,10 +248,11 @@
             $(document).on('click', '.btn-delete', function (e) {
                 e.preventDefault();
                 let userId = $(this).data('id');
+                let subjectId = $(this).data('subject_id');
 
                 if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
                     $.ajax({
-                        url: `{{ route("students.delete", ":id") }}`.replace(':id', userId),
+                        url: `{{ route("students.delete", ":id",":subject_id") }}`.replace(':id', userId).replace(':subject_id',subjectId),
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token

@@ -82,7 +82,7 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
         Route::post('store' , 'addStudent')->name('store');
         Route::get('show/{id}' , 'show')->name('show');
         Route::post('update/{id}' , 'update')->name('update');
-        Route::delete('delete/{id}' , 'delete')->name('delete');
+        Route::delete('delete/{id}/{subject_id}' , 'delete')->name('delete');
     });
     Route::controller(CourseController::class)->as('courses.')->prefix('courses/')->group(function (){
         Route::get('{id}' , 'index')->name('index');
