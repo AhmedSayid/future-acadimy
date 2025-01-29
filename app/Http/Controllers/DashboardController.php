@@ -87,10 +87,11 @@ class DashboardController extends Controller
     private function getTeacherHomeData()
     {
         $teacher = Teacher::findOrFail($this->getTeacherId());
-        $students = SubjectStudent::whereIn('subject_id', $teacher->subjects->pluck('id'))
-            ->with('student.user')
-            ->latest()
+        $students = SubjectStudent::selectRaw('MAX(id) as id, student_id')
+            ->whereIn('subject_id', $teacher->subjects->pluck('id'))
             ->groupBy('student_id')
+            ->with('student.user')
+            ->orderByDesc('id')
             ->get()
             ->pluck('student');
         $grades_count = Grade::where('teacher_id', $this->getTeacherId())->count();
