@@ -21,9 +21,10 @@ class StudentController extends Controller
         if (request()->ajax()) {
             $teacher = Teacher::findOrFail($this->getTeacherId());
             $rows = SubjectStudent::whereIn('subject_id', $teacher->subjects->pluck('id'))
-                ->with('student.user','subject')
-                ->get();
-            $html = view('platform.students.table', compact('rows'))->render();
+                ->with('student.user', 'subject')
+                ->selectRaw('MIN(id) as id, student_id') // Ensures only one record per student_id
+                ->groupBy('student_id')
+                ->get();            $html = view('platform.students.table', compact('rows'))->render();
             return response()->json(['html' => $html]);
         }
         $subjects = Subject::where('teacher_id' , $this->getTeacherId())->get();
@@ -68,10 +69,23 @@ class StudentController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            return response()->json(['key' => 'success', 'data' => $user]);
-        } catch (\Exception $e){
+            $student = \App\Models\Student::findOrFail($this->getStudentId($id));
+
+            $subject_ids = SubjectStudent::where('student_id', $student->id)->pluck('subject_id')->toArray();
+//            dd($subject_ids);
+            $grade = ['id' => $student->grade->id, 'name' => $student->grade->name];
+
+            return response()->json([
+                'key' => 'success',
+                'data' => [
+                    'user' => $user,
+                    'subject_id' => $subject_ids,
+                    'grade' => $grade,
+                ]
+            ]);
+        } catch (\Exception $e) {
             $this->log($e);
-            return response()->json(['key' => 'failed' , 'msg' => 'يوجد خطأ ما']);
+            return response()->json(['key' => 'failed', 'msg' => 'يوجد خطأ ما']);
         }
     }
 
@@ -80,6 +94,7 @@ class StudentController extends Controller
         try {
             $user = User::findOrFail($id);
             $user->update($request->validated());
+            SubjectStudent::where('student_id' , $this->getStudentId($id))->delete();
             foreach ($request->subject_id as $subject){
                 SubjectStudent::firstOrCreate([
                     'subject_id' => $subject,
@@ -97,7 +112,7 @@ class StudentController extends Controller
     public function delete($id,$subject_id)
     {
         try {
-            SubjectStudent::where(['student_id' => $this->getStudentId($id) , 'subject_id' => $subject_id])->first()->delete();
+            SubjectStudent::findOrFail($id)->delete();
             return response()->json(['key' => 'success', 'msg' => 'تم حذف المستخدم بنجاح']);
         } catch (\Exception $e){
             $this->log($e);

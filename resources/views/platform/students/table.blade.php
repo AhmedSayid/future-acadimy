@@ -4,7 +4,6 @@
     <tr>
         <th class="border-bottom-0">الإسم</th>
         <th class="border-bottom-0">الهاتف</th>
-        <th class="border-bottom-0">المادة</th>
         <th class="border-bottom-0">حالة الحظر</th>
         <th class="border-bottom-0">التحكم</th>
     </tr>
@@ -18,9 +17,8 @@
             <td>
                 {{$row->student?->user?->phone}}
             </td>
-            <td>{{ $row->subject?->name }}</td>
             <td>
-                @if(!$row->user?->is_blocked)
+                @if(!$row->student?->user?->is_blocked)
                     <span class="btn btn-sm rounded-5 round btn-outline-success">
                         مفعل
                         <i class="feather icon-rotate-cw"></i>
@@ -39,11 +37,8 @@
                 @endif
             </td>
             <td>
-                <a href="#" class="btn btn-outline-primary btn-edit" data-id="{{ $row->id }}">
+                <a href="#" class="btn btn-outline-primary btn-edit" data-id="{{ $row->student?->user?->id }}">
                     <i class="bi bi-pencil-fill"></i>
-                </a>
-                <a href="#" class="btn btn-outline-danger btn-delete" data-id="{{ $row->id }}" data-subject_id="{{$row->subject->id}}">
-                    <i class="bi bi-trash3-fill"></i>
                 </a>
                 <a href="{{route('students.show' , $row->id)}}"
                    class="btn btn-outline-secondary">

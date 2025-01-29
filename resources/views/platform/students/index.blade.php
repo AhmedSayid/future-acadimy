@@ -181,11 +181,24 @@
                     method: 'GET',
                     success: function (response) {
                         if (response.key === 'success') {
-                            let user = response.data;
+                            let user = response.data.user;
+                            let gradeId = response.data.grade.id;
+                            let subjectIds = response.data.subject_id; // Array of selected subject IDs
+
                             $('#editUserModal').modal('show');
+
+                            // Set user details
                             $('#editUserForm [name="name"]').val(user.name);
                             $('#editUserForm [name="phone"]').val(user.phone);
-                            $('#editUserForm [name="id"]').val(user.id); // Hidden input for user ID
+                            $('#editUserForm [name="id"]').val(user.id);
+
+                            // Set selected grade
+                            $('#editGrade').val(gradeId).trigger('change');
+
+                            // Wait for the select2 dropdown to be initialized
+                            setTimeout(() => {
+                                $('#editSubject').val(subjectIds).trigger('change');
+                            }, 500);
                         }
                     }
                 });
