@@ -43,8 +43,8 @@ class DashboardController extends Controller
                 $students = User::where('phone', 'LIKE', "%{$query}%")->where('role', RoleType::STUDENT)->get();
 
             return response()->json([
-                'teachers' => $teachers ?? null,
-                'students' => $students ?? null,
+                'teachers' => $teachers ?? 0,
+                'students' => $students ?? 0,
             ]);
         } catch (Exception $e) {
             $this->log($e);
@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $teachers = User::where('role', RoleType::TEACHER)->latest()->get();
         $students_count = User::where('role', RoleType::STUDENT)->count();
         $videos_count = Course::count();
-        $subjects_count = ErrorLog::count();
+        $subjects_count = Subject::count();
         return [
             'teachers'  => $teachers,
             'students'  => $students_count,

@@ -4,6 +4,7 @@
     <tr>
         <th class="border-bottom-0">الإسم</th>
         <th class="border-bottom-0">الهاتف</th>
+        <th class="border-bottom-0">المادة</th>
         <th class="border-bottom-0">حالة الحظر</th>
         <th class="border-bottom-0">التحكم</th>
     </tr>
@@ -12,11 +13,12 @@
     @foreach($rows as $row)
         <tr>
             <td>
-                {{$row->user?->name}}
+                {{$row->student?->user?->name}}
             </td>
             <td>
-                {{$row->user?->phone}}
+                {{$row->student?->user?->phone}}
             </td>
+            <td>{{ $row->subject?->name }}</td>
             <td>
                 @if(!$row->user?->is_blocked)
                     <span class="btn btn-sm rounded-5 round btn-outline-success">

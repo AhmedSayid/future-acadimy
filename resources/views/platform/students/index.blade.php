@@ -1,7 +1,15 @@
 @extends('dashboard.layouts.master')
 @section('css')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
+    <!--Internal  Datetimepicker-slider css -->
+    <link href="{{URL::asset('assets/plugins/amazeui-datetimepicker/css/amazeui.datetimepicker.css')}}"
+          rel="stylesheet">
+    <link href="{{URL::asset('assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.css')}}"
+          rel="stylesheet">
+    <link href="{{URL::asset('assets/plugins/pickerjs/picker.min.css')}}" rel="stylesheet">
+    <!-- Internal Spectrum-colorpicker css -->
+    <link href="{{URL::asset('assets/plugins/spectrum-colorpicker/spectrum.css')}}" rel="stylesheet">
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -80,7 +88,8 @@
 
                         <div class="form-group">
                             <label for="subject">المادة</label>
-                            <select name="subject_id" id="editSubject" class="form-control">
+                            <select class="form-control select2" name="subject_id[]" id="editSubject" style="width: 100%"
+                                    multiple="multiple">
                             </select>
                         </div>
                     </div>
@@ -128,7 +137,8 @@
 
                         <div class="form-group">
                             <label for="subject">المادة</label>
-                            <select name="subject_id" id="subject" class="form-control">
+                            <select class="form-control select2" name="subject_id[]" id="subject" style="width: 100%"
+                                    multiple="multiple">
                             </select>
                         </div>
                         <div class="form-group mb-0 mt-3 justify-content-end">
@@ -151,6 +161,13 @@
     <script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/modal.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/jquery.maskedinput/jquery.maskedinput.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js')}}"></script>
+    <script src="{{URL::asset('assets/plugins/pickerjs/picker.min.js')}}"></script>
+    <script src="{{URL::asset('assets/js/form-elements.js')}}"></script>
 
     <script>
         $(document).ready(function () {

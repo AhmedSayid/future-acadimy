@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\RoleType;
 use App\Http\Requests\Teacher;
 use App\Http\Requests\TeacherUpdate;
+use App\Models\Subject;
 use App\Models\SubjectStudent;
 use App\Models\User;
 use App\Traits\GetId;
@@ -57,11 +58,11 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $teacher = \App\Models\Teacher::findOrFail($this->getTeacherId($id));
-        $rows = SubjectStudent::whereIn('subject_id', $teacher->subjects->pluck('id'))
+        $students_count = SubjectStudent::whereIn('subject_id', $teacher->subjects->pluck('id'))
             ->with('student.user')
-            ->get()
-            ->pluck('student');
-        return view('platform.users.show',compact('user', 'rows'));
+            ->count();
+        $subjects_count = Subject::where('teacher_id',$teacher->id)->count();
+        return view('platform.users.show',compact('user', 'students_count','subjects_count'));
     }
 
     public function getTeacherData($id)

@@ -50,21 +50,15 @@
                             <table id="example" class="table key-buttons text-md-nowrap">
                                 <thead>
                                 <tr>
-                                    <th class="border-bottom-0">الإسم</th>
-                                    <th class="border-bottom-0">الهاتف</th>
+                                    <th class="border-bottom-0">عدد المواد المسجلة</th>
+                                    <th class="border-bottom-0">عدد الطلاب المسجلين</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($rows as $row)
-                                    <tr>
-                                        <td>
-                                            {{$row->user?->name}}
-                                        </td>
-                                        <td>
-                                            {{$row->user?->phone}}
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                <tr>
+                                    <td>{{ $subjects_count }}</td>
+                                    <td>{{ $students_count }}</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

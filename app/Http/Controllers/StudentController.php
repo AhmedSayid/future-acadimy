@@ -21,9 +21,8 @@ class StudentController extends Controller
         if (request()->ajax()) {
             $teacher = Teacher::findOrFail($this->getTeacherId());
             $rows = SubjectStudent::whereIn('subject_id', $teacher->subjects->pluck('id'))
-                ->with('student.user')
-                ->get()
-                ->pluck('student');
+                ->with('student.user','subject')
+                ->get();
             $html = view('platform.students.table', compact('rows'))->render();
             return response()->json(['html' => $html]);
         }
@@ -110,11 +109,13 @@ class StudentController extends Controller
                 \App\Models\Student::create(['user_id' => $student->id, 'grade_id' => $request->grade_id]);
             }
 
-            SubjectStudent::firstOrCreate([
-                'subject_id' => $request->subject_id,
-                'student_id' => $this->getStudentId($student->id),
-                'teacher_id' => $this->getTeacherId(),
-            ]);
+            foreach ($request->subject_id as $subject){
+                SubjectStudent::firstOrCreate([
+                    'subject_id' => $subject,
+                    'student_id' => $this->getStudentId($student->id),
+                    'teacher_id' => $this->getTeacherId(),
+                ]);
+            }
 
             if ($check)
                 return response()->json(['key' => 'success' , 'msg' => 'الطالب مسجل على المنصة بالفعل وتمت اضافته الى طلابك']);
