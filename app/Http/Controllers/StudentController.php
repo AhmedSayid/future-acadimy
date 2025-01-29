@@ -48,8 +48,8 @@ class StudentController extends Controller
     public function changeBlockStatus(Request $request)
     {
         try {
-            $student = \App\Models\Student::findOrFail($request->id);
-            $user = User::findOrFail($student->user_id);
+//            $student = \App\Models\Student::findOrFail($request->id);
+            $user = User::findOrFail($request->id);
             $user->update(['is_blocked' => !$user->is_blocked]);
             return response()->json(['key' => 'success', 'msg' => 'تم تغيير حالة الحظر بنجاح']);
         } catch (\Exception $e){
@@ -116,7 +116,7 @@ class StudentController extends Controller
         }
     }
 
-    public function delete($id,$subject_id)
+    public function delete($id)
     {
         try {
             SubjectStudent::findOrFail($id)->delete();
