@@ -32,9 +32,15 @@ class SubjectController extends Controller
 
     public function getVideos($subject_id,?int $id = null)
     {
-        $videos = Course::with('subject', 'chapter')->where('subject_id',$subject_id)->when($id,function ($q) use ($id) {
-            $q->where('chapter_id',$id);
-        })->get();
+        if($id){
+            $videos = Course::with('subject', 'chapter')->where('subject_id',$subject_id)
+                ->when($id,function ($q) use ($id) {
+                    $q->where('chapter_id',$id);
+                })->get();
+        }
+        else
+            $videos = Course::with('subject', 'chapter')->where('subject_id',$subject_id)
+                ->whereNull('chapter_id')->get();
         return $this->successData(CourseResource::collection($videos));
     }
 }
