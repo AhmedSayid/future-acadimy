@@ -252,7 +252,9 @@
 
                 if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
                     $.ajax({
-                        url: `{{ route("students.delete", ":id",":subject_id") }}`.replace(':id', userId).replace(':subject_id',subjectId),
+                        url: `{{ route("students.delete", ["id" => ":id", "subject_id" => ":subject_id"]) }}`
+                            .replace(':id', userId)
+                            .replace(':subject_id', subjectId),
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
