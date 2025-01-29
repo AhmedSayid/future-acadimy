@@ -58,17 +58,17 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        $user = \App\Models\Student::findOrFail($id)->user;
+        $user = User::findOrFail($id);
         $rows = SubjectStudent::with('subject')
-            ->where('student_id',$id)->get();
+            ->where('student_id',$this->getStudentId($id))->get();
         return view('platform.students.show',compact('user','rows'));
     }
 
     public function getStudentData($id)
     {
         try {
-            $student = \App\Models\Student::findOrFail($id);
-            $user = User::findOrFail($student->user_id);
+            $user = User::findOrFail($id);
+            $student = \App\Models\Student::findOrFail($user->id);
             return response()->json(['key' => 'success', 'data' => $user]);
         } catch (\Exception $e){
             $this->log($e);
