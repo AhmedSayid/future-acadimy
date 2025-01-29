@@ -68,7 +68,6 @@ class StudentController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            $student = \App\Models\Student::findOrFail($this->getStudentId($id));
             return response()->json(['key' => 'success', 'data' => $user]);
         } catch (\Exception $e){
             $this->log($e);
