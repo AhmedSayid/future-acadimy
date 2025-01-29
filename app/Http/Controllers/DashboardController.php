@@ -91,6 +91,7 @@ class DashboardController extends Controller
             ->with('student.user')
             ->latest()
             ->distinct('student_id')
+            ->distinct('subject_id')
             ->get()
             ->pluck('student');
         $grades_count = Grade::where('teacher_id', $this->getTeacherId())->count();
