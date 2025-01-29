@@ -95,13 +95,13 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
         Route::post('update/{id}' , 'update')->name('update');
         Route::delete('delete/{id}' , 'delete')->name('delete');
     });
-    Route::controller(BankQuestionController::class)->as('questions.')->prefix('questions/')->group(function (){
-        Route::get('{id}' , 'index')->name('index');
-        Route::get('get-question-data/{id}', 'getQuestionData')->name('get-question-data');
-        Route::post('store' , 'store')->name('store');
-        Route::post('update/{id}' , 'update')->name('update');
-        Route::delete('delete/{id}' , 'delete')->name('delete');
-    });
+//    Route::controller(BankQuestionController::class)->as('questions.')->prefix('questions/')->group(function (){
+//        Route::get('{id}' , 'index')->name('index');
+//        Route::get('get-question-data/{id}', 'getQuestionData')->name('get-question-data');
+//        Route::post('store' , 'store')->name('store');
+//        Route::post('update/{id}' , 'update')->name('update');
+//        Route::delete('delete/{id}' , 'delete')->name('delete');
+//    });
 });
 
 //Route::get('/{page}', [DashboardController::class,'index']);
