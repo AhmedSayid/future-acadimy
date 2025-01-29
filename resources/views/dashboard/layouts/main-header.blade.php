@@ -91,9 +91,6 @@
                                 @foreach(Auth::user()->notifications as $notification)
                                     <a class="d-flex p-3 border-bottom notification-item {{ $notification->read_at ? '' : 'bg-light' }}"
                                        href="{{route('students.show',['id' => $notification->data['user']['id'], 'notification_id' => $notification->id])}}">
-                                        <div class="notifyimg bg-primary">
-                                            <i class="la la-bell text-white"></i>
-                                        </div>
                                         <div class="mr-3">
                                             <h5 class="notification-label mb-1">{{ $notification->data['title'] ?? 'New Notification' }}</h5>
                                             <div class="notification-subtext">
