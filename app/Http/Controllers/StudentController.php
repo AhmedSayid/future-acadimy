@@ -119,7 +119,8 @@ class StudentController extends Controller
     public function delete($id)
     {
         try {
-            SubjectStudent::findOrFail($id)->delete();
+            $subject_ids = Subject::where('teacher_id',$this->getTeacherId())->get()->pluck('id');
+            SubjectStudent::where('student_id',$this->getStudentId($id))->whereIn('subject_id',$subject_ids)->delete();
             return response()->json(['key' => 'success', 'msg' => 'تم حذف المستخدم بنجاح']);
         } catch (\Exception $e){
             $this->log($e);

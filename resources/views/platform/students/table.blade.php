@@ -44,6 +44,9 @@
                    class="btn btn-outline-secondary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
+                <a href="#" class="btn btn-outline-danger btn-delete" data-id="{{ $row->student?->user?->id }}">
+                    <i class="bi bi-trash3-fill"></i>
+                </a>
             </td>
         </tr>
     @endforeach
