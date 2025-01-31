@@ -119,7 +119,7 @@
     </div>
 @endsection
 @section('js')
-    @include('platform.layouts.get_data' , ['index_route' => url('platform/subjects')])
+    @include('platform.layouts.get_data', ['index_route' => url('platform/subjects/' . request()->segment(3))])
 
     <script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
     <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>

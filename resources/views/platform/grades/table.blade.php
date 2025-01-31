@@ -3,6 +3,7 @@
     <thead>
     <tr>
         <th class="border-bottom-0">الإسم</th>
+        <th class="border-bottom-0">عرض المواد</th>
         <th class="border-bottom-0">التحكم</th>
     </tr>
     </thead>
@@ -11,6 +12,11 @@
         <tr>
             <td>
                 {{$row->name}}
+            </td>
+            <td>
+                <a href="{{ route('subjects.index',$row->id) }}" class="btn btn-outline-dark">
+                    <i class="bi bi-book-fill"></i>
+                </a>
             </td>
             <td>
                 <a href="#" class="btn btn-outline-primary btn-edit" data-id="{{ $row->id }}">

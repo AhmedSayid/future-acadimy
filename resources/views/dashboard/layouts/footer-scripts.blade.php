@@ -1,5 +1,9 @@
 <!-- Back-to-top -->
 <a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
+<div class="whatsapp-float" onclick="window.open('https://wa.me/1234567890', '_blank')">
+    <i class="fab fa-whatsapp"></i>
+    <span class="tooltip-text">تواصل مع الدعم الفني</span>
+</div>
 <!-- JQuery min js -->
 <script src="{{URL::asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap Bundle js -->

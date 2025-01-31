@@ -3,6 +3,7 @@
     <thead>
     <tr>
         <th class="border-bottom-0">الإسم</th>
+        <th class="border-bottom-0">الصف</th>
         <th class="border-bottom-0">الفصول</th>
         <th class="border-bottom-0">الفيديوهات</th>
 {{--        <th class="border-bottom-0">بنك الأسئلة</th>--}}
@@ -12,9 +13,8 @@
     <tbody>
     @foreach($rows as $row)
         <tr>
-            <td>
-                {{$row->name}}
-            </td>
+            <td> {{$row->name}} </td>
+            <td> {{ $row->grade?->name }} </td>
             <td>
                 <a href="{{route('chapters.index',$row->id)}}" class="btn btn-outline-info">
                     <i class="bi bi-book-fill"></i>

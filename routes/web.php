@@ -63,7 +63,7 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
             Route::delete('delete/{id}' , 'delete')->name('delete');
         });
         Route::controller(SubjectController::class)->as('subjects.')->prefix('subjects/')->group(function (){
-            Route::get('' , 'index')->name('index');
+            Route::get('{grade_id?}' , 'index')->name('index');
             Route::get('get-subject-data/{id}', 'getSubjectData')->name('get-subject-data');
             Route::post('store' , 'store')->name('store');
             Route::post('update/{id}' , 'update')->name('update');
@@ -91,10 +91,10 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
             Route::get('create/{id}','create')->name('create');
             Route::post('store' , 'store')->name('store');
             Route::post('upload-video', 'uploadVideo')->name('upload-video');
-            Route::post('show' , 'show')->name('show');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::post('update/{id}' , 'update')->name('update');
             Route::delete('delete/{id}' , 'delete')->name('delete');
+            Route::get('/video/{id}', 'showVideo')->name('show');
         });
     });
 //    Route::controller(BankQuestionController::class)->as('questions.')->prefix('questions/')->group(function (){

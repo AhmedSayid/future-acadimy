@@ -12,10 +12,11 @@ use Illuminate\View\View;
 class SubjectController extends Controller
 {
     use GetId;
-    public function index(): JsonResponse | View
+    public function index(?int $grade_id = null): JsonResponse | View
     {
         if(request()->ajax()){
-            $rows = Subject::where('teacher_id' , $this->getTeacherId())->paginate(10);
+            $rows = Subject::with('grade')->where('teacher_id' , $this->getTeacherId())
+                ->when($grade_id,fn ($q) => $q->where('grade_id',$grade_id))->paginate(10);
             $html = view('platform.subjects.table', compact('rows'))->render();
             return response()->json(['html' => $html]);
         }

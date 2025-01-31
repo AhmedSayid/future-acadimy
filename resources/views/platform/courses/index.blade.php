@@ -42,7 +42,27 @@
             </div>
         </div>
     </div>
-
+    <div class="modal" id="modaldemo8" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">عرض الفيديو</h6>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <video id="videoPlayer" style="width: 100%; height: auto;" controls controlsList="nodownload noremoteplayback" disablePictureInPicture>
+                        <source src="" type="video/mp4">
+                        متصفحك لا يدعم تشغيل الفيديو.
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn ripple btn-secondary" data-dismiss="modal" type="button">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
     @include('platform.layouts.get_data' , ['index_route' => url('platform/courses/'.$id)])
@@ -78,4 +98,28 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.btn-show-video', function (e) {
+                e.preventDefault();
+
+                let courseId = $(this).data('id');
+
+                $.ajax({
+                    url: `{{ route("courses.show", ":id") }}`.replace(':id', courseId),
+                    method: 'GET',
+                    success: function (response) {
+                        let videoPlayer = $('#videoPlayer');
+                        videoPlayer.attr('src', response.video_url);
+                        videoPlayer[0].load();
+                    },
+                    error: function (xhr) {
+                        alert('حدث خطأ أثناء تحميل الفيديو');
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

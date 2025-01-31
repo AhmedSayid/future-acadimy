@@ -21,6 +21,9 @@
                 <a href="#" class="btn btn-outline-danger btn-delete" data-id="{{ $row->id }}">
                     <i class="bi bi-trash3-fill"></i>
                 </a>
+                <a href="#" class="btn btn-outline-primary btn-show-video" data-id="{{ $row->id }}" data-toggle="modal" data-target="#modaldemo8">
+                    <i class="bi bi-eye-fill"></i>
+                </a>
             </td>
         </tr>
     @endforeach

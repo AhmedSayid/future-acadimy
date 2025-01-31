@@ -9,9 +9,12 @@ use App\Models\Course;
 use App\Models\Student;
 use App\Models\SubjectStudent;
 use App\Notifications\NotifyUser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CourseController extends Controller
 {
@@ -126,5 +129,18 @@ class CourseController extends Controller
             $this->log($e);
             return response()->json(['key' => 'failed' , 'msg' => 'يوجد خطأ ما']);
         }
+    }
+
+    public function showVideo($id): JsonResponse
+    {
+        $course = Course::findOrFail($id);
+
+        if (!Storage::disk('public')->exists($course->video)) {
+            return response()->json(['error' => 'فيديو غير موجود'], 404);
+        }
+
+        return response()->json([
+            'video_url' => Storage::url($course->video)
+        ]);
     }
 }
