@@ -15,8 +15,8 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name'          => 'حمدي غنيمي',
-            'phone'         => '123456789',
-            'password'      => '123456',
+            'phone'         => '01014473872',
+            'password'      => '01014473872',
             'role'          => RoleType::ADMIN,
         ]);
     }
