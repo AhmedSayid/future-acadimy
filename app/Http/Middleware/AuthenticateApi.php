@@ -4,18 +4,24 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use Closure;
+use Illuminate\Auth\AuthenticationException;
 
 class AuthenticateApi extends Middleware
 {
     /**
-     * Get the path the user should be redirected to when they are not authenticated.
+     * Handle unauthenticated requests.
      */
-    protected function redirectTo(Request $request)
+    protected function unauthenticated($request, array $guards)
     {
-        return response()->json([
-            'code'  => 401,
-            'key'   => 'fail',
-            'msg'   => 'please login again',
-        ]);
+        throw new AuthenticationException(
+            'Unauthenticated.',
+            $guards,
+            response()->json([
+                'code'  => 401,
+                'key'   => 'fail',
+                'msg'   => 'please login again',
+            ], 401)
+        );
     }
 }
