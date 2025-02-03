@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Throwable;
@@ -50,7 +51,7 @@ class Handler extends ExceptionHandler
         return parent::render($request, $e);
     }
 
-    public function unauthenticated($request, AuthenticationException $exception)
+    public function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
     {
         return $request->expectsJson()
             ? response()->json([
