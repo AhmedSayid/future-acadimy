@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
 
     public function unauthenticated($request, \Illuminate\Auth\AuthenticationException $exception)
     {
-        return $request->expectsJson()
+        return $request->segment(2) == 'api'
             ? response()->json([
                 'code'  => 401,
                 'key'   => 'fail',
