@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -165,6 +166,8 @@ class StudentController extends Controller
 
         if ($user->session_id) {
             $sessionPath = config('session.files', storage_path('framework/sessions'));
+            $sessionPath1 = config('session.files', Storage::url('framework/sessions'));
+            \Log::info($sessionPath, $sessionPath1);
             $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
 
             if (File::exists($sessionFile)) {
