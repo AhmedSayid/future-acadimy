@@ -27,5 +27,6 @@ class CheckBlock
             }
         }
 
-        return $next($request);    }
+        return $next($request);
+    }
 }
