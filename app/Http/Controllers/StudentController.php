@@ -166,12 +166,17 @@ class StudentController extends Controller
 
         if ($user->session_id) {
             $this->signOut($user);
+            return response()->json([
+                'key' => 'success',
+                'msg' => 'تم تسجيل خروج المستخدم بنجاح.'
+            ]);
         }
+        else
+            return response()->json([
+                'key'   => 'fail',
+                'msg' => 'المستخدم ليس لديه جلسة نشطة.'
+            ], 404);
 
-        return response()->json([
-            'key'   => 'fail',
-            'msg' => 'المستخدم ليس لديه جلسة نشطة.'
-        ], 404);
     }
 
     private function signOut($user)
@@ -186,9 +191,9 @@ class StudentController extends Controller
             $user->session_id = null;
             $user->save();
 
-            if (File::exists($sessionFile)) {
+            if (File::exists($sessionFile))
                 File::delete($sessionFile);
-            }
+
             return response()->json([
                 'key' => 'success',
                 'msg' => 'تم تسجيل خروج المستخدم بنجاح.'
