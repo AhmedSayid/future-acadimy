@@ -14,11 +14,11 @@ class VerifyDeviceTokenApi
         if (Auth::check()) {
             $user = Auth::user();
             if (is_null($user->device_token)) {
-                return [
+                return response()->json([
                     'code'  => 401,
                     'key'   => 'fail',
                     'msg'   => 'please login again',
-                ];
+                ]);
             }
         }
 
