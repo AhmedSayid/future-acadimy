@@ -44,11 +44,11 @@
                    class="btn btn-outline-secondary">
                     <i class="bi bi-eye-fill"></i>
                 </a>
+                <a href="#" class="btn btn-outline-light btn-logout" data-id="{{ $row->student?->user?->id }}">
+                    <i class="bi bi-box-arrow-left"></i>
+                </a>
                 <a href="#" class="btn btn-outline-danger btn-delete" data-id="{{ $row->student?->user?->id }}">
                     <i class="bi bi-trash3-fill"></i>
-                </a>
-                <a href="#" class="btn btn-outline-primary btn-logout" data-id="{{ $row->student?->user?->id }}">
-                    <i class="bi bi-box-arrow-in-left"></i>
                 </a>
             </td>
         </tr>
