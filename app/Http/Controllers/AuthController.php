@@ -76,6 +76,7 @@ class AuthController extends Controller
         if(auth()->attempt($credentials, $remember = true)){
             $token = Str::random(60);
             if ($user->role == RoleType::STUDENT){
+                $user->update(['session_id' => session()->getId()]);
                 $user->update(['device_token' => $token]);
                 session(['device_token' => $token]);
             }

@@ -283,6 +283,30 @@
                 }
             });
 
+            $(document).on('click', '.btn-logout', function (e) {
+                e.preventDefault();
+                let userId = $(this).data('id');
+
+                if (confirm('هل أنت متأكد من تسجيل الخروج لهذا المستخدم؟')) {
+                    $.ajax({
+                        url: `{{ route("students.logout", ["id" => ":id"]) }}`
+                            .replace(':id', userId),
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                        },
+                        success: function (response) {
+                            if (response.key === 'success') {
+                                toastr.success(response.msg, 'نجاح');
+                            }
+                        },
+                        error: function (response) {
+                            toastr.error(response.responseJSON.msg, 'خطأ');
+                        }
+                    });
+                }
+            });
+
             $('#userForm').on('submit', function (e) {
                 e.preventDefault(); // Prevent form from submitting normally
 

@@ -85,6 +85,7 @@ Route::middleware(['auth'])->prefix('platform/')->group(function (){
             Route::get('show/{id}/{notification_id?}' , 'show')->name('show');
             Route::post('update/{id}' , 'update')->name('update');
             Route::delete('delete/{id}' , 'delete')->name('delete');
+            Route::post('logout/{id}' , 'logout')->name('logout');
         });
         Route::controller(CourseController::class)->as('courses.')->prefix('courses/')->group(function (){
             Route::get('{id}' , 'index')->name('index');

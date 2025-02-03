@@ -22,6 +22,7 @@ class AuthController extends Controller
                 return $this->failMsg($data['msg']);
             else{
                 $token = $data['user']->login();
+
                 return $this->successData(StudentResource::make($data['user'])->setToken($token));
             }
         } catch (\Exception $e){
@@ -76,6 +77,8 @@ class AuthController extends Controller
         if(auth()->attempt($credentials, $remember = true)){
             $token = Str::random(60);
             if ($user->role == RoleType::STUDENT){
+                dd(session()->getId());
+                $user->update(['session_id' => session()->getId()]);
                 $user->update(['device_token' => $token]);
                 session(['device_token' => $token]);
             }

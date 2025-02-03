@@ -11,8 +11,11 @@ use App\Models\SubjectStudent;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Traits\GetId;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
@@ -154,5 +157,39 @@ class StudentController extends Controller
             $this->log($e);
             return response()->json(['key' => 'failed' , 'msg' => 'يوجد خطأ ما']);
         }
+    }
+
+    public function logout($id): JsonResponse
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->session_id) {
+            $sessionPath = config('session.files', storage_path('framework/sessions'));
+            $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
+
+            if (File::exists($sessionFile)) {
+                File::delete($sessionFile);
+
+                $user->device_token = null;
+                $user->remember_token = null;
+                $user->session_id = null;
+                $user->save();
+
+                return response()->json([
+                    'key' => 'success',
+                    'msg' => 'تم تسجيل خروج المستخدم بنجاح.'
+                ]);
+            } else {
+                return response()->json([
+                    'key' => 'fail',
+                    'msg' => 'ملف الجلسة غير موجود.'
+                ], 404);
+            }
+        }
+
+        return response()->json([
+            'key'   => 'fail',
+            'msg' => 'المستخدم ليس لديه جلسة نشطة.'
+        ], 404);
     }
 }
