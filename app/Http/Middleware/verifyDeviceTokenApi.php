@@ -20,9 +20,10 @@ class verifyDeviceTokenApi
             $user = Auth::user();
             $sessionToken = session('device_token');
 
-            if ($user->device_token != $sessionToken || !$user->device_token) {
+            if (isset($user->device_token) && $user->device_token != $sessionToken) {
                 Auth::logout();
                 return [
+                    'code'  => 401,
                     'key'   => 'failed',
                     'msg'   => 'session expired',
                 ];
