@@ -179,23 +179,26 @@ class StudentController extends Controller
 
     private function signOut($user)
     {
-        $sessionPath = config('session.files', storage_path('framework/sessions'));
-        \Log::info($sessionPath);
-        $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
-
-        if (File::exists($sessionFile)) {
-            File::delete($sessionFile);
+        try {
+            $sessionPath = config('session.files', storage_path('framework/sessions'));
+            \Log::info($sessionPath);
+            $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
 
             $user->device_token = null;
             $user->remember_token = null;
             $user->session_id = null;
             $user->save();
 
+            if (File::exists($sessionFile)) {
+                File::delete($sessionFile);
+            }
             return response()->json([
                 'key' => 'success',
                 'msg' => 'تم تسجيل خروج المستخدم بنجاح.'
             ]);
-        } else {
+
+        } catch (\Exception $e){
+            $this->log($e);
             return response()->json([
                 'key' => 'fail',
                 'msg' => 'ملف الجلسة غير موجود.'

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'verify.device' => \App\Http\Middleware\VerifyDeviceToken::class,
         'verifyApi.device' => \App\Http\Middleware\VerifyDeviceTokenApi::class,
         'checkRole' => \App\Http\Middleware\CheckRole::class,
+        'check.block'    => \App\Http\Middleware\CheckBlock::class
     ];
 }
