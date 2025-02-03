@@ -167,7 +167,8 @@ class StudentController extends Controller
         if ($user->session_id) {
             $sessionPath = config('session.files', storage_path('framework/sessions'));
             $sessionPath1 = config('session.files', Storage::url('framework/sessions'));
-            \Log::info($sessionPath, $sessionPath1);
+            \Log::info($sessionPath);
+            \Log::info($sessionPath1);
             $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
 
             if (File::exists($sessionFile)) {
