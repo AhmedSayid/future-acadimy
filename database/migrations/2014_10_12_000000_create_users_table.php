@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('device_token')->nullable();
             $table->boolean('is_blocked')->default(false);
+            $table->string('session_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
