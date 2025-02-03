@@ -11,7 +11,6 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request) {
         if (!$request->is('api/*')) {
-            dd('sss');
             return route('login');
         }
     }
