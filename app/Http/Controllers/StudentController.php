@@ -55,6 +55,9 @@ class StudentController extends Controller
 //            $student = \App\Models\Student::findOrFail($request->id);
             $user = User::findOrFail($request->id);
             $user->update(['is_blocked' => !$user->is_blocked]);
+            if(!$user->is_blocked){
+                $this->signOut($user);
+            }
             return response()->json(['key' => 'success', 'msg' => 'تم تغيير حالة الحظر بنجاح']);
         } catch (\Exception $e){
             $this->log($e);
@@ -165,33 +168,38 @@ class StudentController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->session_id) {
-            $sessionPath = config('session.files', storage_path('framework/sessions'));
-            \Log::info($sessionPath);
-            $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
-
-            if (File::exists($sessionFile)) {
-                File::delete($sessionFile);
-
-                $user->device_token = null;
-                $user->remember_token = null;
-                $user->session_id = null;
-                $user->save();
-
-                return response()->json([
-                    'key' => 'success',
-                    'msg' => 'تم تسجيل خروج المستخدم بنجاح.'
-                ]);
-            } else {
-                return response()->json([
-                    'key' => 'fail',
-                    'msg' => 'ملف الجلسة غير موجود.'
-                ], 404);
-            }
+            $this->signOut($user);
         }
 
         return response()->json([
             'key'   => 'fail',
             'msg' => 'المستخدم ليس لديه جلسة نشطة.'
         ], 404);
+    }
+
+    private function signOut($user)
+    {
+        $sessionPath = config('session.files', storage_path('framework/sessions'));
+        \Log::info($sessionPath);
+        $sessionFile = rtrim($sessionPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $user->session_id;
+
+        if (File::exists($sessionFile)) {
+            File::delete($sessionFile);
+
+            $user->device_token = null;
+            $user->remember_token = null;
+            $user->session_id = null;
+            $user->save();
+
+            return response()->json([
+                'key' => 'success',
+                'msg' => 'تم تسجيل خروج المستخدم بنجاح.'
+            ]);
+        } else {
+            return response()->json([
+                'key' => 'fail',
+                'msg' => 'ملف الجلسة غير موجود.'
+            ], 404);
+        }
     }
 }
