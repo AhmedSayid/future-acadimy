@@ -12,10 +12,10 @@ class AuthenticateApi extends Middleware
      */
     protected function redirectTo(Request $request)
     {
-        return [
+        return response()->json([
             'code'  => 401,
             'key'   => 'fail',
             'msg'   => 'please login again',
-        ];
+        ]);
     }
 }
