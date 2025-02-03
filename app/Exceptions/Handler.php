@@ -49,4 +49,16 @@ class Handler extends ExceptionHandler
 
         return parent::render($request, $e);
     }
+
+    public function unauthenticated($request, AuthenticationException $exception)
+    {
+        return $request->expectsJson()
+            ? response()->json([
+                'code'  => 401,
+                'key'   => 'fail',
+                'msg'   => 'Invalid or missing authentication token.',
+            ], 401)
+            : redirect()->guest(route('login'));
+    }
+
 }
