@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('login',[AuthController::class ,'login']);
 Route::middleware(['auth:sanctum','verifyApi.device','check.block'])->group(function (){
+    Route::get('get-status',[AuthController::class , 'checkStatus']);
     Route::get('get-subjects',[SubjectController::class,'getSubjects']);
     Route::get('get-chapters/{id}',[SubjectController::class,'getChapters']);
     Route::get('get-videos/{subject_id}/{id?}',[SubjectController::class,'getVideos']);

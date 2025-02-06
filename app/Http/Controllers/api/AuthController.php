@@ -8,6 +8,7 @@ use App\Http\Requests\Login;
 use App\Http\Resources\StudentResource;
 use App\Models\User;
 use App\Traits\ResponseTrait;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -90,5 +91,16 @@ class AuthController extends Controller
         }
         else
             return ['key' => 'fail' , 'msg' => 'error'];
+    }
+
+    public function checkStatus()
+    {
+        $user = Auth::user();
+        if (!$user)
+            return ['key' => 'fail', 'msg' => 'لم يتم العثور على الحساب'];
+        elseif($user->is_blocked)
+            return ['key' => 'fail' , 'msg' => 'تم حظر الحساب'];
+
+        return ['key' => 'success', 'msg' => 'نجاح'];
     }
 }
