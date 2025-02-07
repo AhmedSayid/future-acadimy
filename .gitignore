@@ -3,9 +3,11 @@
 /public/build
 /public/hot
 /public/storage
+/public/.htaccess
 /storage/*.key
 /vendor
 .env
+.htaccess
 .env.server
 .env.backup
 .env.production
