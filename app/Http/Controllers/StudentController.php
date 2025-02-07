@@ -55,7 +55,6 @@ class StudentController extends Controller
 //            $student = \App\Models\Student::findOrFail($request->id);
             $user = User::findOrFail($request->id);
             $user->update(['is_blocked' => !$user->is_blocked]);
-            !$user->is_blocked?:$user->update(['device_token' => null]);
             return response()->json(['key' => 'success', 'msg' => 'تم تغيير حالة الحظر بنجاح']);
         } catch (\Exception $e){
             $this->log($e);
