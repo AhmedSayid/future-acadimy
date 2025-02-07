@@ -101,6 +101,11 @@ class AuthController extends Controller
         elseif($user->is_blocked)
             return ['key' => 'fail' , 'msg' => 'تم حظر الحساب'];
 
-        return ['key' => 'success', 'msg' => 'نجاح'];
+        return [
+            'key' => 'success',
+            'msg' => 'نجاح',
+            'data' => [
+                'name' => $user->name ?? null,
+            ]];
     }
 }
