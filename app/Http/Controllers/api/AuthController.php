@@ -100,6 +100,8 @@ class AuthController extends Controller
             return ['key' => 'fail', 'msg' => 'لم يتم العثور على الحساب'];
         elseif($user->is_blocked)
             return ['key' => 'fail' , 'msg' => 'تم حظر الحساب'];
+        elseif(is_null($this->device_token))
+            return ['key' => 'unauthenticated', 'msg' => 'يرجى تسجيل الدخول من جديد'];
 
         return [
             'key' => 'success',
