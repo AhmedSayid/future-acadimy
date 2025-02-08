@@ -16,7 +16,7 @@ class VerifyDeviceTokenApi
             if (is_null($user->device_token)) {
                 return response()->json([
                     'code'  => 401,
-                    'key'   => 'fail',
+                    'key'   => 'unauthenticated',
                     'msg'   => 'please login again',
                 ]);
             }
