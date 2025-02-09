@@ -147,7 +147,7 @@ class CourseController extends Controller
                 $file = $request->file('video');
                 $filename = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
 
-                ProcessVideoUpload::dispatchAfterResponse($file, $filename); // Send to Queue
+                ProcessVideoUpload::dispatch($file, $filename)->afterResponse(); // Send to Queue
                 dd(Storage::url(asset($filename)));
                 return response()->json(['success' => true, 'message' => 'Video is being processed in the background.','filepath' => Storage::url(asset($filename))]);
             }
