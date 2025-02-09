@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Course as CourseReq;
 use App\Http\Requests\updateCourse;
+use App\Jobs\ProcessVideoUpload;
 use App\Models\Chapter;
 use App\Models\Course;
 use App\Models\Student;
@@ -92,42 +93,69 @@ class CourseController extends Controller
         }
     }
 
+//    public function uploadVideo(Request $request)
+//    {
+//        try{
+//            $validator = Validator::make($request->all(), [
+//                'video' => 'required|mimes:mp4,mkv,avi',
+//            ]);
+//
+//            if ($validator->fails()) {
+//                return response()->json([
+//                    'success' => false,
+//                    'errors' => $validator->errors()->all(),
+//                ]);
+//            }
+//            if ($request->hasFile('video')) {
+//                $file = $request->file('video');
+//
+//                $originalName = $file->getClientOriginalName();
+//                $sanitizedFileName = str_replace(' ', '_', $originalName);
+//
+//                $fileName = time() . '_' . $sanitizedFileName;
+//
+//                $filePath = $file->storeAs('videos', $fileName, 'public');
+//
+//                return response()->json([
+//                    'success' => true,
+//                    'filePath' => $filePath,
+//                ]);
+//            }
+//
+//            return response()->json([
+//                'success' => false,
+//                'error' => 'Failed to upload the video.',
+//            ]);
+//        } catch (\Exception $e){
+//            $this->log($e);
+//            return response()->json(['key' => 'failed' , 'msg' => 'يوجد خطأ ما']);
+//        }
+//    }
+
     public function uploadVideo(Request $request)
     {
-        try{
+        try {
             $validator = Validator::make($request->all(), [
-                'video' => 'required|mimes:mp4,mkv,avi',
+                'video' => 'required|mimes:mp4,mkv,avi|max:1024000', // Max 1GB
             ]);
 
             if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'errors' => $validator->errors()->all(),
-                ]);
+                return response()->json(['success' => false, 'errors' => $validator->errors()]);
             }
+
             if ($request->hasFile('video')) {
                 $file = $request->file('video');
+                $filename = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
 
-                $originalName = $file->getClientOriginalName();
-                $sanitizedFileName = str_replace(' ', '_', $originalName);
-
-                $fileName = time() . '_' . $sanitizedFileName;
-
-                $filePath = $file->storeAs('videos', $fileName, 'public');
-
-                return response()->json([
-                    'success' => true,
-                    'filePath' => $filePath,
-                ]);
+                ProcessVideoUpload::dispatch($file, $filename); // Send to Queue
+                dd(Storage::url(asset($filename)));
+                return response()->json(['success' => true, 'message' => 'Video is being processed in the background.','filepath' => Storage::url(asset($filename))]);
             }
-
-            return response()->json([
-                'success' => false,
-                'error' => 'Failed to upload the video.',
-            ]);
-        } catch (\Exception $e){
+            else
+                return ['key' => 'fail', 'msg' => 'no video sent'];
+        }catch (\Exception $e){
             $this->log($e);
-            return response()->json(['key' => 'failed' , 'msg' => 'يوجد خطأ ما']);
+            return response()->json(['success' => false, 'error' => 'Failed to upload the video.']);
         }
     }
 
