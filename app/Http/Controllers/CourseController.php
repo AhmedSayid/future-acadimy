@@ -144,6 +144,7 @@ class CourseController extends Controller
             }
 
             if ($request->hasFile('video')) {
+                dd('ssss');
                 $file = $request->file('video');
                 $filename = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
 
